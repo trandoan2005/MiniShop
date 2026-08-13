@@ -1,21 +1,4 @@
-<?php
-$pageTitle = "Chi tiết Danh mục";
-require_once __DIR__ . '/../../../dao/CategoryDAO.php';
-$categoryDAO = new CategoryDAO();
-
-if (!isset($_GET['id'])) {
-    header("Location: index.php");
-    exit;
-}
-$id = (int)$_GET['id'];
-$category = $categoryDAO->findById($id);
-
-if (!$category) {
-    header("Location: index.php");
-    exit;
-}
-
-ob_start();
+﻿<?php ob_start();
 ?>
 <div class="card shadow-sm">
     <div class="card-header bg-info text-white">
@@ -31,6 +14,16 @@ ob_start();
                 <tr>
                     <th class="table-light">Tên danh mục</th>
                     <td class="fw-bold text-primary"><?= htmlspecialchars($category->name) ?></td>
+                </tr>
+                <tr>
+                    <th class="table-light">Hình ảnh</th>
+                    <td>
+                        <?php if ($category->image != "") { ?>
+                            <img src="uploads/categories/<?= htmlspecialchars($category->image) ?>" class="img-thumbnail" width="150">
+                        <?php } else { ?>
+                            <span class="text-muted">No Image</span>
+                        <?php } ?>
+                    </td>
                 </tr>
                 <tr>
                     <th class="table-light">Mô tả</th>
@@ -56,12 +49,12 @@ ob_start();
         </table>
         
         <div class="mt-3">
-            <a href="edit.php?id=<?= $category->id ?>" class="btn btn-warning"><i class="bi bi-pencil"></i> Sửa danh mục</a>
-            <a href="index.php" class="btn btn-secondary"><i class="bi bi-arrow-left"></i> Quay lại</a>
+            <a href="index.php?area=admin&controller=category&action=edit&id=<?= $category->id ?>" class="btn btn-warning"><i class="bi bi-pencil"></i> Sửa danh mục</a>
+            <a href="index.php?area=admin&controller=category&action=index" class="btn btn-secondary"><i class="bi bi-arrow-left"></i> Quay lại</a>
         </div>
     </div>
 </div>
 <?php
 $content = ob_get_clean();
-include '../layouts/master.php';
+include __DIR__ . '/../layouts/master.php';
 ?>

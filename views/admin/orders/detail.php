@@ -1,47 +1,4 @@
-<?php
-$pageTitle = "Chi tiết Đơn hàng";
-require_once __DIR__ . '/../../../dao/OrderDAO.php';
-require_once __DIR__ . '/../../../dao/OrderDetailDAO.php';
-
-$orderDAO = new OrderDAO();
-$orderDetailDAO = new OrderDetailDAO();
-
-if (!isset($_GET['id'])) {
-    header("Location: index.php");
-    exit;
-}
-$id = (int)$_GET['id'];
-$order = $orderDAO->findById($id);
-
-if (!$order) {
-    header("Location: index.php");
-    exit;
-}
-
-$orderDetails = $orderDetailDAO->getByOrderId($id);
-
-function getStatusText($status) {
-    switch ($status) {
-        case 0: return 'Chờ xác nhận';
-        case 1: return 'Đã xác nhận';
-        case 2: return 'Đang giao';
-        case 3: return 'Hoàn thành';
-        case 4: return 'Đã hủy';
-        default: return 'Không xác định';
-    }
-}
-function getStatusClass($status) {
-    switch ($status) {
-        case 0: return 'bg-secondary';
-        case 1: return 'bg-info text-dark';
-        case 2: return 'bg-warning text-dark';
-        case 3: return 'bg-success';
-        case 4: return 'bg-danger';
-        default: return 'bg-dark';
-    }
-}
-
-ob_start();
+﻿<?php ob_start();
 ?>
 
 <div class="row">
@@ -86,7 +43,7 @@ ob_start();
                 </table>
                 <div class="mt-3 text-center border-top pt-3">
                     <a href="update_status.php?id=<?= $order->id ?>" class="btn btn-warning"><i class="bi bi-arrow-repeat"></i> Cập nhật trạng thái</a>
-                    <a href="index.php" class="btn btn-secondary"><i class="bi bi-arrow-left"></i> Quay lại</a>
+                    <a href="index.php?area=admin&controller=order&action=index" class="btn btn-secondary"><i class="bi bi-arrow-left"></i> Quay lại</a>
                 </div>
             </div>
         </div>
@@ -125,7 +82,7 @@ ob_start();
                                         <td><?= $index + 1 ?></td>
                                         <td>
                                             <?php if (!empty($od->productImage)): ?>
-                                                <img src="../../../uploads/products/<?= htmlspecialchars($od->productImage) ?>" alt="..." width="50" class="img-thumbnail">
+                                                <img src="uploads/products/<?= htmlspecialchars($od->productImage) ?>" alt="..." width="50" class="img-thumbnail">
                                             <?php else: ?>
                                                 <span class="text-muted"><i class="bi bi-image"></i></span>
                                             <?php endif; ?>
@@ -155,5 +112,5 @@ ob_start();
 
 <?php
 $content = ob_get_clean();
-include '../layouts/master.php';
+include __DIR__ . '/../layouts/master.php';
 ?>

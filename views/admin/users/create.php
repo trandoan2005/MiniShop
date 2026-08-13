@@ -1,49 +1,4 @@
-<?php
-$pageTitle = "Thêm Người dùng";
-require_once __DIR__ . '/../../../dao/UserDAO.php';
-$userDAO = new UserDAO();
-
-$errors = [];
-$username = "";
-$password = "";
-$fullname = "";
-$email = "";
-$phone = "";
-$role = "";
-
-$status = 1;
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = trim($_POST["username"] ?? "");
-    $password = trim($_POST["password"] ?? "");
-    $fullname = trim($_POST["fullname"] ?? "");
-    $email = trim($_POST["email"] ?? "");
-    $phone = trim($_POST["phone"] ?? "");
-    $role = trim($_POST["role"] ?? "");
-
-    $status = $_POST["status"] ?? 1;
-
-    // Validation
-    if ($username === "") { $errors[] = "Tên đăng nhập không được để trống."; }
-    if ($password === "") { $errors[] = "Mật khẩu không được để trống."; }
-    if ($fullname === "") { $errors[] = "Họ tên không được để trống."; }
-    if ($email === "") { $errors[] = "Email không được để trống."; }
-    if ($phone === "") { $errors[] = "Điện thoại không được để trống."; }
-    if ($role === "") { $errors[] = "Vai trò (admin/staff) không được để trống."; }
-
-
-    if (empty($errors)) {
-        $obj = new User(0, $username, $password, $fullname, $email, $phone, $role, $status);
-        if ($userDAO->insert($obj)) {
-            header("Location: index.php");
-            exit;
-        } else {
-            $errors[] = "Thêm thất bại. Vui lòng thử lại.";
-        }
-    }
-}
-
-ob_start();
+﻿<?php ob_start();
 ?>
 <div class="card shadow-sm">
     <div class="card-header bg-success text-white">
@@ -101,11 +56,11 @@ ob_start();
             <hr>
             <button type="submit" class="btn btn-primary"><i class="bi bi-save"></i> Lưu</button>
             <button type="reset" class="btn btn-warning"><i class="bi bi-arrow-counterclockwise"></i> Làm mới</button>
-            <a href="index.php" class="btn btn-secondary"><i class="bi bi-arrow-left"></i> Quay lại</a>
+            <a href="index.php?area=admin&controller=user&action=index" class="btn btn-secondary"><i class="bi bi-arrow-left"></i> Quay lại</a>
         </form>
     </div>
 </div>
 <?php
 $content = ob_get_clean();
-include '../layouts/master.php';
+include __DIR__ . '/../layouts/master.php';
 ?>

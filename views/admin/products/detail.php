@@ -1,21 +1,4 @@
-<?php
-$pageTitle = "Chi tiết Sản phẩm";
-require_once __DIR__ . '/../../../dao/ProductDAO.php';
-$productDAO = new ProductDAO();
-
-if (!isset($_GET['id'])) {
-    header("Location: index.php");
-    exit;
-}
-$id = (int)$_GET['id'];
-$product = $productDAO->findById($id);
-
-if (!$product) {
-    header("Location: index.php");
-    exit;
-}
-
-ob_start();
+﻿<?php ob_start();
 ?>
 <div class="card shadow-sm">
     <div class="card-header bg-info text-white">
@@ -24,12 +7,28 @@ ob_start();
     <div class="card-body">
         <div class="row">
             <div class="col-md-4 text-center mb-3">
-                <?php if (!empty($product->image)): ?>
-                    <img src="../../../uploads/products/<?= htmlspecialchars($product->image) ?>" alt="<?= htmlspecialchars($product->name) ?>" class="img-fluid rounded border" style="max-height: 300px;">
-                <?php else: ?>
-                    <div class="bg-light d-flex align-items-center justify-content-center border rounded" style="height: 300px;">
-                        <span class="text-muted"><i class="bi bi-image" style="font-size: 3rem;"></i><br>Chưa có ảnh</span>
+                <div class="mb-3">
+                    <?php if (!empty($product->image)): ?>
+                        <img src="uploads/products/<?= htmlspecialchars($product->image) ?>" alt="<?= htmlspecialchars($product->name) ?>" class="img-fluid rounded border" style="max-height: 300px;">
+                    <?php else: ?>
+                        <div class="bg-light d-flex align-items-center justify-content-center border rounded" style="height: 300px;">
+                            <span class="text-muted"><i class="bi bi-image" style="font-size: 3rem;"></i><br>Chưa có ảnh</span>
+                        </div>
+                    <?php endif; ?>
+                </div>
+                
+                <?php
+                $galleryImages = $productDAO->getImagesByProductId($id);
+                if (!empty($galleryImages)): 
+                ?>
+                <div class="border-top pt-3 text-start">
+                    <h6 class="fw-bold">Thư viện ảnh:</h6>
+                    <div class="d-flex flex-wrap gap-2 justify-content-center mt-2">
+                        <?php foreach ($galleryImages as $img): ?>
+                            <img src="uploads/products/<?= htmlspecialchars($img['image']) ?>" class="img-thumbnail" width="80" style="object-fit: cover;">
+                        <?php endforeach; ?>
                     </div>
+                </div>
                 <?php endif; ?>
             </div>
             <div class="col-md-8">
@@ -53,7 +52,7 @@ ob_start();
                         </tr>
                         <tr>
                             <th class="table-light">Giá gốc</th>
-                            <td class="text-muted"><del><?= number_format($product->oldPrice, 0, ',', '.') ?> đ</del></td>
+                            <td class="text-muted"><?= number_format($product->oldPrice, 0, ',', '.') ?> đ</td>
                         </tr>
                         <tr>
                             <th class="table-light">Giá bán</th>
@@ -93,12 +92,12 @@ ob_start();
         </div>
         
         <div class="mt-4 text-center border-top pt-3">
-            <a href="edit.php?id=<?= $product->id ?>" class="btn btn-warning"><i class="bi bi-pencil"></i> Sửa sản phẩm</a>
-            <a href="index.php" class="btn btn-secondary"><i class="bi bi-arrow-left"></i> Quay lại</a>
+            <a href="index.php?area=admin&controller=product&action=edit&id=<?= $product->id ?>" class="btn btn-warning"><i class="bi bi-pencil"></i> Sửa sản phẩm</a>
+            <a href="index.php?area=admin&controller=product&action=index" class="btn btn-secondary"><i class="bi bi-arrow-left"></i> Quay lại</a>
         </div>
     </div>
 </div>
 <?php
 $content = ob_get_clean();
-include '../layouts/master.php';
+include __DIR__ . '/../layouts/master.php';
 ?>

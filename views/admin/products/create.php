@@ -1,70 +1,21 @@
-<?php
-$pageTitle = "Thêm Sản phẩm";
-require_once __DIR__ . '/../../../dao/ProductDAO.php';
-require_once __DIR__ . '/../../../dao/CategoryDAO.php';
-require_once __DIR__ . '/../../../dao/BrandDAO.php';
-
-$productDAO = new ProductDAO();
-$categoryDAO = new CategoryDAO();
-$brandDAO = new BrandDAO();
-
-$categories = $categoryDAO->getAll();
-$brands = $brandDAO->getAll();
-
-$errors = [];
-$name = $slug = $description = $image = "";
-$categoryId = $brandId = 0;
-$oldPrice = $salePrice = $quantity = 0;
-$status = 1;
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $name = trim($_POST["name"] ?? "");
-    $slug = trim($_POST["slug"] ?? "");
-    $categoryId = (int)($_POST["categoryId"] ?? 0);
-    $brandId = (int)($_POST["brandId"] ?? 0);
-    $oldPrice = (float)($_POST["oldPrice"] ?? 0);
-    $salePrice = (float)($_POST["salePrice"] ?? 0);
-    $quantity = (int)($_POST["quantity"] ?? 0);
-    $description = trim($_POST["description"] ?? "");
-    $image = trim($_POST["image"] ?? "");
-    $status = (int)($_POST["status"] ?? 1);
-
-    // Validation
-    if ($name === "") $errors[] = "Tên sản phẩm không được để trống.";
-    if ($categoryId <= 0) $errors[] = "Vui lòng chọn danh mục.";
-    if ($brandId <= 0) $errors[] = "Vui lòng chọn thương hiệu.";
-    if ($salePrice <= 0) $errors[] = "Giá bán phải lớn hơn 0.";
-    if ($quantity < 0) $errors[] = "Số lượng không hợp lệ.";
-
-    if (empty($errors)) {
-        $p = new Product(0, $categoryId, $brandId, $name, $slug, $oldPrice, $salePrice, $quantity, $description, $image, $status);
-        if ($productDAO->insert($p)) {
-            header("Location: index.php");
-            exit;
-        } else {
-            $errors[] = "Thêm thất bại. Vui lòng thử lại.";
-        }
-    }
-}
-
-ob_start();
+﻿<?php ob_start();
 ?>
 <div class="card shadow-sm">
     <div class="card-header bg-success text-white">
         <h5 class="mb-0">Thêm mới sản phẩm</h5>
     </div>
     <div class="card-body">
-        <?php if (!empty($errors)): ?>
+        <?php if (!empty($errors)) { ?>
             <div class="alert alert-danger">
                 <ul class="mb-0">
-                    <?php foreach ($errors as $err): ?>
-                        <li><?= $err ?></li>
-                    <?php endforeach; ?>
+                    <?php foreach ($errors as $error) { ?>
+                        <li><?= $error ?></li>
+                    <?php } ?>
                 </ul>
             </div>
-        <?php endif; ?>
+        <?php } ?>
 
-        <form method="POST">
+        <form method="POST" enctype="multipart/form-data">
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label class="form-label fw-bold">Tên sản phẩm <span class="text-danger">*</span></label>
@@ -116,9 +67,11 @@ ob_start();
                 </div>
             </div>
             
+            <div class="text-center mb-3" id="preview">
+            </div>
             <div class="mb-3">
-                <label class="form-label fw-bold">Ảnh sản phẩm (Tên file)</label>
-                <input type="text" name="image" class="form-control" value="<?= htmlspecialchars($image) ?>">
+                <label class="form-label">Hình ảnh</label>
+                <input type="file" id="image" name="image" class="form-control" accept="image/*">
             </div>
 
             <div class="mb-3">
@@ -139,13 +92,13 @@ ob_start();
             </div>
             
             <hr>
-            <button type="submit" class="btn btn-primary"><i class="bi bi-save"></i> Lưu</button>
+            <button type="submit" class="btn btn-primary"><i class="bi bi-save"></i> Lưu sản phẩm</button>
             <button type="reset" class="btn btn-warning"><i class="bi bi-arrow-counterclockwise"></i> Làm mới</button>
-            <a href="index.php" class="btn btn-secondary"><i class="bi bi-arrow-left"></i> Quay lại</a>
+            <a href="index.php?area=admin&controller=product&action=index" class="btn btn-secondary"><i class="bi bi-arrow-left"></i> Quay lại</a>
         </form>
     </div>
 </div>
 <?php
 $content = ob_get_clean();
-include '../layouts/master.php';
+include __DIR__ . '/../layouts/master.php';
 ?>
