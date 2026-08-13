@@ -101,9 +101,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (!in_array($extension, $allowExtensions)) {
             $errors[] = "Chỉ cho phép file JPG, JPEG, PNG hoặc WEBP.";
         }
-        $maxSize = 200 * 1024;
+        $maxSize = 5 * 1024 * 1024;
         if ($fileSize > $maxSize) {
-            $errors[] = "Kích thước hình ảnh <= 200 KB.";
+            $errors[] = "Kích thước hình ảnh <= 5 MB.";
         }
     }
 
@@ -112,7 +112,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($fileName != "") {
             $extension = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
             $image = time() . "_" . $slug . "." . $extension;
-            $uploadPath = __DIR__ . "/../../../uploads/products/" . $image;
+            $uploadPath = __DIR__ . "/../../uploads/products/" . $image;
             move_uploaded_file($tmpName, $uploadPath);
         }
 
@@ -158,7 +158,7 @@ if (isset($_GET['delete_image_id'])) {
     
     if ($productDAO->deleteImage($imgId)) {
         // Xóa file vật lý
-        $filePath = __DIR__ . "/../../../uploads/products/" . $imgName;
+        $filePath = __DIR__ . "/../../uploads/products/" . $imgName;
         if (file_exists($filePath)) {
             unlink($filePath);
         }
@@ -218,9 +218,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (!in_array($extension, $allowExtensions)) {
             $errors[] = "Ảnh đại diện: Chỉ cho phép file JPG, JPEG, PNG hoặc WEBP.";
         }
-        $maxSize = 200 * 1024;
+        $maxSize = 5 * 1024 * 1024;
         if ($fileSize > $maxSize) {
-            $errors[] = "Ảnh đại diện: Kích thước <= 200 KB.";
+            $errors[] = "Ảnh đại diện: Kích thước <= 5 MB.";
         }
     }
 
@@ -229,11 +229,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($fileName != "") {
             $extension = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
             $image = time() . "_" . $slug . "." . $extension;
-            $uploadPath = __DIR__ . "/../../../uploads/products/" . $image;
+            $uploadPath = __DIR__ . "/../../uploads/products/" . $image;
 
             // Xóa hình ảnh cũ (nếu có)
             if (!empty($productOld->image)) {
-                $oldImage = __DIR__ . "/../../../uploads/products/" . $productOld->image;
+                $oldImage = __DIR__ . "/../../uploads/products/" . $productOld->image;
                 if (file_exists($oldImage)) {
                     unlink($oldImage);
                 }
@@ -252,7 +252,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $ext = strtolower(pathinfo($galFileName, PATHINFO_EXTENSION));
                     if (in_array($ext, ['jpg', 'jpeg', 'png', 'gif', 'webp'])) {
                         $newImageName = time() . "_" . rand(100, 999) . "." . $ext;
-                        $galUploadPath = __DIR__ . "/../../../uploads/products/" . $newImageName;
+                        $galUploadPath = __DIR__ . "/../../uploads/products/" . $newImageName;
                         if (move_uploaded_file($galTmpName, $galUploadPath)) {
                             $productDAO->insertImage($id, $newImageName);
                         }
