@@ -85,7 +85,7 @@ $discountPercent = $hasSale ? round(($product->oldPrice - $product->salePrice) /
 
                 <!-- Nút hành động -->
                 <div class="d-flex gap-2 mb-3">
-                    <button class="btn btn-accent btn-lg flex-grow-1" <?= $product->quantity <= 0 ? 'disabled' : '' ?>>
+                    <button class="btn btn-accent btn-lg flex-grow-1" onclick="addToCart(<?= $product->id ?>)" <?= $product->quantity <= 0 ? 'disabled' : '' ?>>
                         <i class="bi bi-cart-plus"></i> Thêm vào giỏ hàng
                     </button>
                     <button class="btn btn-outline-secondary btn-lg">

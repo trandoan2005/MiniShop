@@ -23,11 +23,16 @@ $discountPercent = $hasSale ? round(($product->oldPrice - $product->salePrice) /
                 <?= htmlspecialchars($product->name) ?>
             </a>
         </div>
-        <div class="mt-2">
-            <span class="price-sale"><?= number_format($product->salePrice, 0, ',', '.') ?>₫</span>
-            <?php if ($hasSale): ?>
-                <span class="price-old"><?= number_format($product->oldPrice, 0, ',', '.') ?>₫</span>
-            <?php endif; ?>
+        <div class="mt-2 d-flex justify-content-between align-items-center">
+            <div>
+                <span class="price-sale"><?= number_format($product->salePrice, 0, ',', '.') ?>₫</span>
+                <?php if ($hasSale): ?>
+                    <span class="price-old d-block" style="font-size: 0.8rem;"><?= number_format($product->oldPrice, 0, ',', '.') ?>₫</span>
+                <?php endif; ?>
+            </div>
+            <button class="btn btn-sm btn-outline-accent rounded-circle" onclick="addToCart(<?= $product->id ?>)" <?= $product->quantity <= 0 ? 'disabled' : '' ?> title="Thêm vào giỏ">
+                <i class="bi bi-cart-plus"></i>
+            </button>
         </div>
     </div>
 </div>

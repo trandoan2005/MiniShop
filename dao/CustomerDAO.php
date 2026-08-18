@@ -107,5 +107,33 @@ class CustomerDAO extends BaseDAO
             return [];
         }
     }
+
+    // Tìm customer theo số điện thoại
+    public function findByPhone($phone)
+    {
+        try {
+            $sql = "SELECT * FROM customers WHERE phone = ?";
+            $stmt = $this->executePrepared($sql, "s", $phone);
+            $result = $stmt->get_result();
+            if ($row = $result->fetch_assoc()) {
+                return new Customer($row['id'], $row['fullname'], $row['email'], $row['phone'], $row['address'], $row['status'], $row['created_at'], $row['updated_at']);
+            }
+            return null;
+        } catch (Exception $e) {
+            return null;
+        }
+    }
+
+    // Insert và trả về ID
+    public function insertAndGetId($fullname, $phone, $address)
+    {
+        try {
+            $sql = "INSERT INTO customers (fullname, phone, address, status) VALUES (?, ?, ?, 1)";
+            $stmt = $this->executePrepared($sql, "sss", $fullname, $phone, $address);
+            return $this->conn->insert_id;
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
 }
 ?>

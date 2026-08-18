@@ -62,13 +62,29 @@ $currentAction = $_GET['action'] ?? 'index';
                 </li>
             </ul>
             <!-- Thanh tìm kiếm -->
-            <form class="d-flex search-bar" method="GET">
+            <form class="d-flex search-bar me-3" method="GET">
                 <input type="hidden" name="area" value="client">
                 <input type="hidden" name="controller" value="product">
                 <input type="hidden" name="action" value="search">
                 <input type="text" name="keyword" placeholder="Tìm kiếm giày..." value="<?= htmlspecialchars($_GET['keyword'] ?? '') ?>">
                 <button type="submit"><i class="bi bi-search"></i></button>
             </form>
+
+            <!-- Giỏ hàng -->
+            <a href="index.php?area=client&controller=cart&action=index" class="btn position-relative p-2" style="color: #fff;">
+                <i class="bi bi-cart3 fs-5"></i>
+                <?php
+                $cartCount = 0;
+                if (isset($_SESSION['cart'])) {
+                    foreach ($_SESSION['cart'] as $item) {
+                        $cartCount += $item['quantity'];
+                    }
+                }
+                ?>
+                <span id="cartCount" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" <?= $cartCount == 0 ? 'style="display:none;"' : '' ?>>
+                    <?= $cartCount ?>
+                </span>
+            </a>
         </div>
     </div>
 </nav>
