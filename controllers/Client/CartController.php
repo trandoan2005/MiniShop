@@ -207,11 +207,23 @@ class CartController
                     $orderDAO->beginTransaction();
 
                     // Tìm customer theo phone hoặc tạo mới
-                    $customer = $customerDAO->findByPhone($phone);
-                    if ($customer) {
-                        $customerId = $customer->id;
+                    if (isset($_SESSION['customer'])) {
+                        $customerId = $_SESSION['customer']['id'];
+                        // Cập nhật thông tin nếu có thay đổi
+                        $customer = clone $customerDAO->findById($customerId);
+                        if ($customer) {
+                            $customer->fullname = $fullname;
+                            $customer->phone = $phone;
+                            $customer->address = $address;
+                            $customerDAO->update($customer);
+                        }
                     } else {
-                        $customerId = $customerDAO->insertAndGetId($fullname, $phone, $address);
+                        $customer = $customerDAO->findByPhone($phone);
+                        if ($customer) {
+                            $customerId = $customer->id;
+                        } else {
+                            $customerId = $customerDAO->insertAndGetId($fullname, $phone, $address);
+                        }
                     }
 
                     // Tạo đơn hàng

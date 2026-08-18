@@ -71,7 +71,7 @@ $currentAction = $_GET['action'] ?? 'index';
             </form>
 
             <!-- Giỏ hàng -->
-            <a href="index.php?area=client&controller=cart&action=index" class="btn position-relative p-2" style="color: #fff;">
+            <a href="index.php?area=client&controller=cart&action=index" class="btn position-relative p-2 me-2" style="color: #fff;">
                 <i class="bi bi-cart3 fs-5"></i>
                 <?php
                 $cartCount = 0;
@@ -85,6 +85,31 @@ $currentAction = $_GET['action'] ?? 'index';
                     <?= $cartCount ?>
                 </span>
             </a>
+
+            <!-- User Auth -->
+            <ul class="navbar-nav">
+                <?php if (isset($_SESSION['customer'])): ?>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center gap-2" href="#" data-bs-toggle="dropdown">
+                            <i class="bi bi-person-circle fs-5"></i>
+                            <span class="d-none d-lg-inline"><?= htmlspecialchars($_SESSION['customer']['fullname']) ?></span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-bag-check me-2"></i>Đơn hàng của tôi</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-person-gear me-2"></i>Tài khoản</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item text-danger" href="index.php?area=client&controller=auth&action=logout"><i class="bi bi-box-arrow-right me-2"></i>Đăng xuất</a></li>
+                        </ul>
+                    </li>
+                <?php else: ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.php?area=client&controller=auth&action=login" title="Đăng nhập">
+                            <i class="bi bi-person fs-5"></i>
+                            <span class="d-lg-none ms-2">Đăng nhập</span>
+                        </a>
+                    </li>
+                <?php endif; ?>
+            </ul>
         </div>
     </div>
 </nav>

@@ -39,17 +39,20 @@
                 <div class="col-lg-7 mb-4">
                     <div class="card border-0 bg-light p-4">
                         <h4 class="mb-4">Thông tin giao hàng</h4>
+                        <?php 
+                        $sessCustomer = $_SESSION['customer'] ?? null;
+                        ?>
                         <div class="mb-3">
                             <label class="form-label">Họ và tên <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" name="fullname" required value="<?= htmlspecialchars($_POST['fullname'] ?? '') ?>">
+                            <input type="text" class="form-control" name="fullname" required value="<?= htmlspecialchars($_POST['fullname'] ?? $sessCustomer['fullname'] ?? '') ?>">
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Số điện thoại <span class="text-danger">*</span></label>
-                            <input type="tel" class="form-control" name="phone" required value="<?= htmlspecialchars($_POST['phone'] ?? '') ?>">
+                            <input type="tel" class="form-control" name="phone" required value="<?= htmlspecialchars($_POST['phone'] ?? $sessCustomer['phone'] ?? '') ?>">
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Địa chỉ nhận hàng <span class="text-danger">*</span></label>
-                            <textarea class="form-control" name="address" rows="3" required><?= htmlspecialchars($_POST['address'] ?? '') ?></textarea>
+                            <textarea class="form-control" name="address" rows="3" required><?= htmlspecialchars($_POST['address'] ?? $sessCustomer['address'] ?? '') ?></textarea>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Ghi chú (Tùy chọn)</label>
