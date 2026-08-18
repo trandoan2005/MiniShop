@@ -1,5 +1,5 @@
 -- ==========================================
--- Lab 6: MiniShop - Cơ sở dữ liệu
+-- Lab 6: ShoeShop - Cơ sở dữ liệu
 -- Database: tranvandoan_database
 -- ==========================================
 
@@ -131,69 +131,69 @@ CREATE TABLE IF NOT EXISTS order_details (
 
 -- Danh mục
 INSERT INTO categories (name, description, image, status) VALUES
-('Điện thoại', 'Các loại điện thoại thông minh', 'dien-thoai.jpg', 1),
-('Laptop', 'Máy tính xách tay các loại', 'laptop.jpg', 1),
-('Tablet', 'Máy tính bảng', 'tablet.jpg', 1),
-('Phụ kiện', 'Phụ kiện điện tử', 'phu-kien.jpg', 1),
-('Đồng hồ thông minh', 'Smartwatch các loại', 'dong-ho.jpg', 1);
+('Giày Sneaker', 'Giày thể thao sneaker chính hãng các thương hiệu lớn', 'sneaker.jpg', 1),
+('Giày Chạy Bộ', 'Giày chạy bộ chuyên dụng, công nghệ đệm cao cấp', 'running.jpg', 1),
+('Giày Bóng Rổ', 'Giày bóng rổ performance và lifestyle', 'basketball.jpg', 1),
+('Giày Đá Bóng', 'Giày đá bóng sân cỏ tự nhiên và nhân tạo', 'football.jpg', 1),
+('Dép & Sandal', 'Dép và sandal thể thao chính hãng', 'sandal.jpg', 1);
 
 -- Thương hiệu
 INSERT INTO brands (name, logo, status) VALUES
-('Apple', 'apple.png', 1),
-('Samsung', 'samsung.png', 1),
-('Xiaomi', 'xiaomi.png', 1),
-('Dell', 'dell.png', 1),
-('Sony', 'sony.png', 1);
+('Nike', 'nike.png', 1),
+('Adidas', 'adidas.png', 1),
+('Jordan', 'jordan.png', 1),
+('New Balance', 'new-balance.png', 1),
+('Puma', 'puma.png', 1);
 
 -- Sản phẩm
 INSERT INTO products (category_id, brand_id, name, slug, old_price, sale_price, quantity, description, image, status) VALUES
-(1, 1, 'iPhone 15 Pro Max', 'iphone-15-pro-max', 34990000, 32990000, 50, 'iPhone 15 Pro Max 256GB chính hãng', 'iphone15promax.jpg', 1),
-(1, 2, 'Samsung Galaxy S24 Ultra', 'samsung-galaxy-s24-ultra', 33990000, 31490000, 35, 'Samsung Galaxy S24 Ultra 256GB', 'galaxys24ultra.jpg', 1),
-(2, 4, 'Dell XPS 15', 'dell-xps-15', 42990000, 39990000, 20, 'Laptop Dell XPS 15 Core i7', 'dellxps15.jpg', 1),
-(1, 3, 'Xiaomi 14 Ultra', 'xiaomi-14-ultra', 23990000, 21990000, 40, 'Xiaomi 14 Ultra 512GB', 'xiaomi14ultra.jpg', 1),
-(2, 1, 'MacBook Air M3', 'macbook-air-m3', 32990000, 29990000, 25, 'MacBook Air M3 15 inch', 'macbookairm3.jpg', 1),
-(3, 2, 'Samsung Galaxy Tab S9', 'samsung-galaxy-tab-s9', 19990000, 17990000, 30, 'Galaxy Tab S9 WiFi', 'galaxytabs9.jpg', 1),
-(3, 1, 'iPad Pro M4', 'ipad-pro-m4', 28990000, 27490000, 15, 'iPad Pro M4 11 inch', 'ipadprom4.jpg', 1),
-(4, 1, 'AirPods Pro 2', 'airpods-pro-2', 6990000, 5990000, 100, 'Tai nghe AirPods Pro 2 USB-C', 'airpodspro2.jpg', 1),
-(4, 2, 'Samsung Galaxy Buds3 Pro', 'samsung-galaxy-buds3-pro', 5990000, 4990000, 60, 'Tai nghe Galaxy Buds3 Pro', 'galaxybuds3pro.jpg', 1),
-(5, 1, 'Apple Watch Series 9', 'apple-watch-series-9', 11990000, 10490000, 45, 'Apple Watch Series 9 GPS 45mm', 'applewatchs9.jpg', 1);
+(1, 1, 'Nike Air Force 1 ''07 White', 'nike-air-force-1-07-white', 3200000, 2890000, 50, 'Giày Nike Air Force 1 ''07 màu trắng nguyên bản, chất liệu da cao cấp, đế Air êm ái. Icon kinh điển không bao giờ lỗi thời.', 'nike-af1-white.jpg', 1),
+(1, 2, 'Adidas Stan Smith White Green', 'adidas-stan-smith-white-green', 2800000, 2490000, 40, 'Adidas Stan Smith phối trắng xanh cổ điển, upper da thật mềm mại, đế cao su bền bỉ. Biểu tượng thời trang từ 1971.', 'adidas-stan-smith.jpg', 1),
+(1, 3, 'Air Jordan 1 Retro High OG Chicago', 'jordan-1-retro-high-chicago', 5500000, 4990000, 15, 'Jordan 1 Retro High OG phối màu Chicago huyền thoại. Da premium, cổ cao bảo vệ mắt cá chân. Phiên bản giới hạn.', 'jordan-1-chicago.jpg', 1),
+(2, 1, 'Nike Air Zoom Pegasus 41', 'nike-pegasus-41', 3800000, 3290000, 35, 'Giày chạy bộ Nike Pegasus 41 với công nghệ Zoom Air và React foam. Thoáng khí, nhẹ, phù hợp chạy hàng ngày.', 'nike-pegasus-41.jpg', 1),
+(2, 2, 'Adidas Ultraboost Light', 'adidas-ultraboost-light', 4500000, 3890000, 25, 'Adidas Ultraboost Light với đệm Boost nhẹ nhất từ trước đến nay, upper Primeknit+ ôm chân hoàn hảo. Chạy bộ êm như mây.', 'adidas-ultraboost.jpg', 1),
+(3, 1, 'Nike LeBron 21', 'nike-lebron-21', 5200000, 4690000, 20, 'Nike LeBron 21 với Zoom Air ở tiền bàn chân và Air Max ở gót. Bám sân tốt, hỗ trợ chuyển hướng nhanh trên sân bóng rổ.', 'nike-lebron-21.jpg', 1),
+(3, 3, 'Air Jordan 4 Retro Thunder', 'jordan-4-retro-thunder', 6800000, 5990000, 10, 'Jordan 4 Retro phối màu Thunder (đen vàng). Da nubuck cao cấp, đệm Air Sole, thiết kế cage bên hông đặc trưng.', 'jordan-4-thunder.jpg', 1),
+(4, 1, 'Nike Mercurial Superfly 9 Elite FG', 'nike-mercurial-superfly-9', 6500000, 5790000, 18, 'Giày đá bóng Nike Mercurial Superfly 9 Elite sân cỏ tự nhiên. Vaporposite upper siêu nhẹ, Zoom Air đệm gót, tốc độ tối đa.', 'nike-mercurial.jpg', 1),
+(4, 2, 'Adidas Predator Elite FG', 'adidas-predator-elite-fg', 5800000, 5190000, 22, 'Adidas Predator Elite cho sân cỏ tự nhiên. Upper Hybridtouch kiểm soát bóng chuẩn xác, đế Facetframe ổn định.', 'adidas-predator.jpg', 1),
+(5, 1, 'Nike Air Max 90 Slide', 'nike-air-max-90-slide', 1800000, 1490000, 60, 'Dép Nike Air Max 90 Slide với đệm Air Max huyền thoại. Quai da tổng hợp bền chắc, êm chân cả ngày dài.', 'nike-slide.jpg', 1);
 
 -- Ảnh sản phẩm
 INSERT INTO product_images (product_id, image_url, sort_order) VALUES
-(1, 'iphone15promax_1.jpg', 1),
-(1, 'iphone15promax_2.jpg', 2),
-(2, 'galaxys24ultra_1.jpg', 1),
-(3, 'dellxps15_1.jpg', 1),
-(4, 'xiaomi14ultra_1.jpg', 1);
+(1, 'nike-af1-white_1.jpg', 1),
+(1, 'nike-af1-white_2.jpg', 2),
+(2, 'adidas-stan-smith_1.jpg', 1),
+(3, 'jordan-1-chicago_1.jpg', 1),
+(5, 'adidas-ultraboost_1.jpg', 1);
 
 -- Users
 INSERT INTO users (username, password, fullname, email, phone, role, status) VALUES
-('admin', '123456', 'Quản trị viên', 'admin@minishop.com', '0901111111', 'admin', 1),
-('staff1', '123456', 'Nhân viên 1', 'staff1@minishop.com', '0902222222', 'staff', 1),
-('staff2', '123456', 'Nhân viên 2', 'staff2@minishop.com', '0903333333', 'staff', 1),
-('manager', '123456', 'Quản lý', 'manager@minishop.com', '0904444444', 'manager', 1),
-('editor', '123456', 'Biên tập viên', 'editor@minishop.com', '0905555555', 'editor', 1);
+('admin', '123456', 'Quản trị viên', 'admin@shoeshop.vn', '0901111111', 'admin', 1),
+('staff1', '123456', 'Nhân viên bán hàng', 'staff1@shoeshop.vn', '0902222222', 'staff', 1),
+('staff2', '123456', 'Nhân viên kho', 'staff2@shoeshop.vn', '0903333333', 'staff', 1),
+('manager', '123456', 'Quản lý cửa hàng', 'manager@shoeshop.vn', '0904444444', 'manager', 1),
+('editor', '123456', 'Biên tập nội dung', 'editor@shoeshop.vn', '0905555555', 'editor', 1);
 
 -- Khách hàng
 INSERT INTO customers (fullname, email, phone, address, status) VALUES
-('Nguyễn Văn An', 'nva@gmail.com', '0911111111', '123 Lê Lợi, Q.1, TP.HCM', 1),
-('Trần Thị Bình', 'ttb@gmail.com', '0922222222', '456 Nguyễn Huệ, Q.1, TP.HCM', 1),
-('Lê Hoàng Cường', 'lhc@gmail.com', '0933333333', '789 Trần Hưng Đạo, Q.5, TP.HCM', 1),
-('Phạm Thị Dung', 'ptd@gmail.com', '0944444444', '321 Hai Bà Trưng, Q.3, TP.HCM', 1),
-('Hoàng Văn Em', 'hve@gmail.com', '0955555555', '654 Võ Văn Tần, Q.3, TP.HCM', 1);
+('Nguyễn Minh Khang', 'nmk@gmail.com', '0911111111', '123 Nguyễn Trãi, Q.1, TP.HCM', 1),
+('Trần Thị Hương', 'tth@gmail.com', '0922222222', '456 Lê Văn Sỹ, Q.3, TP.HCM', 1),
+('Lê Quốc Bảo', 'lqb@gmail.com', '0933333333', '789 Cách Mạng Tháng 8, Q.10, TP.HCM', 1),
+('Phạm Anh Tuấn', 'pat@gmail.com', '0944444444', '321 Trần Đại Nghĩa, Q.Bình Thạnh, TP.HCM', 1),
+('Hoàng Thu Trang', 'htt@gmail.com', '0955555555', '654 Phạm Văn Đồng, Q.Thủ Đức, TP.HCM', 1);
 
 -- Đơn hàng
 INSERT INTO orders (customer_id, total_amount, status, note) VALUES
-(1, 32990000, 'Đã giao', 'Giao nhanh'),
-(2, 31490000, 'Đang giao', NULL),
-(3, 39990000, 'Chờ xử lý', 'Gọi trước khi giao'),
-(4, 5990000, 'Đã giao', NULL),
-(5, 27490000, 'Đã hủy', 'Khách hủy đơn');
+(1, 4990000, 'Đã giao', 'Size 42, giao nhanh'),
+(2, 2490000, 'Đang giao', NULL),
+(3, 3290000, 'Chờ xử lý', 'Size 41, check hàng trước khi giao'),
+(4, 5790000, 'Đã giao', NULL),
+(5, 5990000, 'Đã hủy', 'Khách đổi ý, muốn size khác');
 
 -- Chi tiết đơn hàng
 INSERT INTO order_details (order_id, product_id, quantity, price) VALUES
-(1, 1, 1, 32990000),
-(2, 2, 1, 31490000),
-(3, 3, 1, 39990000),
-(4, 8, 1, 5990000),
-(5, 7, 1, 27490000);
+(1, 3, 1, 4990000),
+(2, 2, 1, 2490000),
+(3, 4, 1, 3290000),
+(4, 8, 1, 5790000),
+(5, 7, 1, 5990000);

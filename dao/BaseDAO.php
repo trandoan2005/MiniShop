@@ -1,5 +1,7 @@
 <?php
-require_once __DIR__ . '/../config/Database.php';
+namespace DAO;
+use Config\Database;
+use Exception;
 
 class BaseDAO extends Database
 {
@@ -41,13 +43,25 @@ class BaseDAO extends Database
     }
 
     // Đếm tổng số bản ghi
-    public function count()
+    public function count(string $table = "", string $column = "", string $keyword = "")
     {
+        if ($table === "") {
+            $table = $this->tableName;
+        }
         try {
-            $sql = "SELECT COUNT(*) as total FROM {$this->tableName}";
-            $result = $this->conn->query($sql);
-            $row = $result->fetch_assoc();
-            return (int)$row['total'];
+            if ($keyword == "") {
+                $sql = "SELECT COUNT(*) AS total FROM $table";
+                $result = $this->conn->query($sql);
+                $row = $result->fetch_assoc();
+                return (int)$row["total"];
+            }
+            $sql = "SELECT COUNT(*) AS total FROM $table WHERE $column LIKE ?";
+            $stmt = $this->conn->prepare($sql);
+            $keyword = "%$keyword%";
+            $stmt->bind_param("s", $keyword);
+            $stmt->execute();
+            $row = $stmt->get_result()->fetch_assoc();
+            return (int)$row["total"];
         } catch (Exception $e) {
             return 0;
         }
@@ -62,7 +76,7 @@ class BaseDAO extends Database
             $stmt->bind_param("i", $id);
             return $stmt->execute();
         } catch (Exception $e) {
-            die("Lỗi xóa: " . $e->getMessage());
+            return false;
         }
     }
 
